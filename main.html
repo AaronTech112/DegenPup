@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$DEGENPUP - The Future of Memecoin Utility</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></link>
+
+    <style>
+        /* Custom styles for the $DEGENPUP theme */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #110103;
+            color: #f0f0f0;
+            background-image: linear-gradient(160deg, #8C031C 0%, #2D050D 100%);
+            overflow-x: hidden;
+            /* Added radial gradient overlay for more depth */
+            background-image: linear-gradient(160deg, #8C031C 0%, #2D050D 100%),
+                              radial-gradient(circle at 70% 30%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                              radial-gradient(circle at 30% 80%, rgba(255, 0, 0, 0.05) 0%, transparent 50%);
+        }
+
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        /* Dynamic background shapes */
+        #shape-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.1);
+            animation: float 20s infinite linear;
+        }
+
+        .paw-shape {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255, 215, 0, 0.15)"><path d="M11.5 2C8.46 2 6 4.46 6 7.5s2.46 5.5 5.5 5.5 5.5-2.46 5.5-5.5S14.54 2 11.5 2zM19 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM5 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 0; /* No border-radius for SVG shapes */
+            animation: float 20s infinite linear, rotate 15s infinite linear;
+        }
+
+        .bone-shape {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255, 215, 0, 0.15)"><path d="M12 2c-3.31 0-6 2.69-6 6s2.69 6 6 6c.79 0 1.54-.15 2.24-.41l3.52 3.52c.2.2.45.3.71.3s.51-.1.71-.3c.4-.4.4-1.03 0-1.43L15.41 13.76c.26-.7.41-1.45.41-2.26 0-3.31-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 0;
+            animation: float 25s infinite linear, rotate-reverse 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rotate-reverse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        /* Hero image float animation */
+        .hero-float {
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+        
+        @keyframes heroFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Glowing Badge Animation */
+        .glowing-badge::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: #facc15; /* yellow-400 */
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 5px #facc15, 0 0 10px #facc15;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+            50% { transform: translateY(-50%) scale(1.5); opacity: 0.7; }
+        }
+
+        /* Button glow effect */
+        .cta-button {
+            background: linear-gradient(45deg, #FFD700, #FF8C00);
+            color: #2D050D;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Glassmorphism effect for sections */
+        .glass-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        /* Countdown Timer specific styling */
+        .countdown-digit {
+            font-variant-numeric: tabular-nums; /* Ensures digits have equal width */
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.7); /* Subtle glow for digits */
+        }
+
+        /* New countdown digit animation */
+        .countdown-digit-container {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 0, 0, 0.5); /* Initial border */
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Initial glow */
+            animation: countdown-glow 2s infinite alternate; /* Pulsing glow animation */
+        }
+
+        @keyframes countdown-glow {
+            0% {
+                border-color: rgba(255, 0, 0, 0.5);
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            }
+            100% {
+                border-color: rgba(255, 215, 0, 0.8); /* Gold-like glow */
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+
+        /* Roadmap card hover effect */
+        .roadmap-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.15); /* More prominent border */
+            background: rgba(255, 0, 0, 0.1); /* Lighter red background */
+            position: relative; /* For pseudo-element background */
+            overflow: hidden; /* Hide overflow of the background image */
+        }
+        .roadmap-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5); /* Stronger shadow on hover */
+        }
+
+        /* Roadmap card paw print background */
+        .roadmap-card::before {
+            content: '';
+            position: absolute;
+            top: -10%; /* Adjust position */
+            left: -10%; /* Adjust position */
+            width: 120%; /* Cover the entire card */
+            height: 120%; /* Cover the entire card */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255, 215, 0, 0.05)"><path d="M11.5 2C8.46 2 6 4.46 6 7.5s2.46 5.5 5.5 5.5 5.5-2.46 5.5-5.5S14.54 2 11.5 2zM19 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM5 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/></svg>');
+            background-size: 80% auto; /* Make it large but fit */
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.1; /* Very subtle */
+            transform: rotate(-15deg); /* Slight rotation */
+            z-index: -1; /* Ensure it's behind content */
+        }
+
+        /* Tokenomics Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px; /* Fixed height for chart */
+            width: 100%;
+            max-width: 400px; /* Max width for larger screens */
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px; /* Larger height on desktop */
+            }
+        }
+
+        /* Hero background dog image */
+        .hero-background-dog {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.2); /* Slightly larger and centered */
+            width: 100%;
+            height: 100%;
+            background-image: url('dg%20pup%20logo.jpg'); /* Updated image */
+            background-size: cover; /* Cover the area */
+            background-position: center;
+            opacity: 0.05; /* Slightly less faint */
+            filter: grayscale(80%) blur(3px); /* Less blur, more visible */
+            animation: subtle-pulse 10s infinite ease-in-out;
+            z-index: 0; /* Ensure it's behind content but above shapes */
+        }
+
+        @keyframes subtle-pulse {
+            0% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.05; }
+            50% { transform: translate(-50%, -50%) scale(1.25); opacity: 0.07; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.03; }
+        }
+
+        /* Title glow effect */
+        .title-glow {
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+
+        /* About section image float */
+        .about-image-float {
+            animation: heroFloat 7s ease-in-out infinite; /* Reusing heroFloat for consistency */
+        }
+
+        /* Roadmap timeline dots */
+        .timeline-dot {
+            position: absolute;
+            left: -15px; /* Adjust as needed for alignment */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #facc15; /* yellow-400 */
+            border-radius: 50%;
+            border: 2px solid #8C031C;
+            z-index: 10;
+        }
+        .timeline-line {
+            position: absolute;
+            left: -10px; /* Aligns with dots */
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .roadmap-item {
+            position: relative;
+            padding-left: 25px; /* Space for dot and line */
+        }
+
+        /* Wagging animation for the logo */
+        @keyframes wagging {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .wagging-logo {
+            animation: wagging 1s ease-in-out infinite;
+            transform-origin: bottom center; /* Make it wag from the bottom */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Dynamic shape background -->
+    <div id="shape-container"></div>
+    
+    <!-- Main content wrapper -->
+    <div class="relative z-10">
+        <!-- Header & Nav -->
+        <header id="header" class="fixed top-0 left-0 right-0 z-50">
+             <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
+                <div class="flex items-center justify-center glass-section rounded-full px-6 py-3 shadow-lg shadow-black/20">
+                    <ul class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                        <li><a href="#about" class="hover:text-yellow-400 transition-colors">About</a></li>
+                        <li><a href="#roadmap" class="hover:text-yellow-400 transition-colors">Roadmap</a></li>
+                        <li><a href="#presale" class="hover:text-yellow-400 transition-colors">Presale Details</a></li>
+                        <li><a href="#tokenomics" class="hover:text-yellow-400 transition-colors">Tokenomics</a></li>
+                        <li><a href="#key-phases" class="hover:text-yellow-400 transition-colors">Key Phases</a></li>
+                    </ul>
+                   <div class="md:hidden text-center text-sm font-bold text-yellow-400 font-orbitron">DegenPup</div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center pt-24 pb-12 px-4 relative overflow-hidden">
+            <!-- Subtle large dog image in background -->
+            <div class="hero-background-dog"></div>
+
+            <div class="max-w-4xl mx-auto relative z-10">
+                <!-- Logo with wagging animation -->
+                <div class="mb-6 hero-float">
+                    <img src="WhatsApp%20Image%202025-07-02%20at%2011.58.16_32c73d15.jpg" alt="DegenPup Logo" class="mx-auto rounded-full shadow-lg shadow-red-500/40 w-48 h-48 object-cover wagging-logo">
+                </div>
+
+                <h1 class="font-orbitron text-5xl md:text-7xl font-black tracking-wider uppercase text-white title-glow">
+                    Degen<span class="text-yellow-400">Pup</span>
+                </h1>
+                
+                <p class="font-orbitron text-2xl md:text-3xl font-bold text-yellow-400 mb-4">$DPUP</p>
+                
+                <!-- Combined Status and Upcoming Badge -->
+                <div class="flex flex-col items-center space-y-2 mt-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-gray-300 text-sm md:text-base font-semibold">Presale Status:</span>
+                        <span class="relative glowing-badge bg-yellow-400 text-red-900 text-xs font-bold px-4 py-1.5 rounded-full">UPCOMING</span>
+                    </div>
+                </div>
+
+                <!-- Countdown Timer -->
+                <div class="flex flex-col items-center my-8">
+                    <p class="text-lg md:text-xl font-medium text-gray-300 mb-4">Presale Starts In:</p>
+                    <div class="flex space-x-3 md:space-x-5 text-4xl md:text-6xl font-extrabold text-white">
+                        <div class="flex flex-col items-center bg-gray-800 bg-opacity-70 rounded-lg p-3 md:p-5 countdown-digit-container">
+                            <span id="days" class="countdown-digit">00</span>
+                            <span class="text-base md:text-xl text-red-400 font-semibold">DAYS</span>
+                        </div>
+                        <div class="flex flex-col items-center bg-gray-800 bg-opacity-70 rounded-lg p-3 md:p-5 countdown-digit-container">
+                            <span id="hours" class="countdown-digit">00</span>
+                            <span class="text-base md:text-xl text-red-400 font-semibold">HOURS</span>
+                        </div>
+                        <div class="flex flex-col items-center bg-gray-800 bg-opacity-70 rounded-lg p-3 md:p-5 countdown-digit-container">
+                            <span id="minutes" class="countdown-digit">00</span>
+                            <span class="text-base md:text-xl text-red-400 font-semibold">MINS</span>
+                        </div>
+                        <div class="flex flex-col items-center bg-gray-800 bg-opacity-70 rounded-lg p-3 md:p-5 countdown-digit-container">
+                            <span id="seconds" class="countdown-digit">00</span>
+                            <span class="text-base md:text-xl text-red-400 font-semibold">SECS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Icons -->
+                <div class="flex justify-center space-x-6 mt-8">
+                    <a href="#" class="text-gray-300 hover:text-yellow-400 transition-transform transform hover:scale-110" aria-label="Telegram">
+                        <i class="fab fa-telegram-plane text-3xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-yellow-400 transition-transform transform hover:scale-110" aria-label="Twitter/X">
+                        <i class="fab fa-twitter text-3xl"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 space-y-20 sm:space-y-24 pb-20">
+            <!-- About Section -->
+            <section id="about" class="glass-section p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+                <div class="max-w-4xl text-center mx-auto relative z-10">
+                    <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-center mb-6">The Inspiration Behind <span class="text-yellow-400">DegenPup</span></h2>
+                    <div class="w-24 h-1 bg-red-600 mx-auto mb-8 rounded-full"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <!-- Left Column: All Text Content -->
+                        <div class="text-lg text-gray-300 space-y-6 leading-relaxed md:text-left">
+                            <p>DegenPup is more than just a token - it's a movement. Born from the playful spirit of Doge and the fearless nature of degens, DegenPup embodies the perfect blend of fun, community, and boldness. Our mission is to create a token that's not just a digital asset, but a symbol of the unapologetic, adventurous, and creative spirit that defines the crypto community.</p>
+                            <p class="font-bold text-white text-xl">The Doge Spirit</p>
+                            <p>The Doge meme, with its lovable Shiba Inu mascot, represents the lighthearted and humorous side of cryptocurrency. DegenPup captures this essence, injecting a dose of fun and playfulness into the world of crypto. Our token is designed to bring people together, fostering a sense of community and camaraderie among holders.</p>
+                            <p class="font-bold text-white text-xl">The Degen Nature</p>
+                            <p>Degens, on the other hand, are known for their fearless approach to crypto, always looking to push boundaries and explore new opportunities. DegenPup taps into this daring nature, empowering holders to take bold actions and make informed decisions in the crypto space. Our token is designed for those who aren't afraid to take risks and are always on the lookout for the next big thing.</p>
+                        </div>
+                        <!-- Right Column: Image -->
+                        <div class="flex justify-center items-center">
+                            <img src="WhatsApp%20Image%202025-06-26%20at%2023.25.06_fc406b91.jpg" alt="DegenPup About Image" class="rounded-3xl shadow-xl shadow-red-500/30 w-full max-w-sm about-image-float object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Roadmap Section -->
+            <section id="roadmap" class="glass-section p-6 sm:p-8 rounded-3xl">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-center mb-6">Our <span class="text-red-500">Roadmap</span></h2>
+                    <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12 rounded-full"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Phase Cards -->
+                        <div class="roadmap-card bg-red-900/30 p-6 rounded-2xl border border-red-800">
+                            <h3 class="font-orbitron text-xl font-bold text-white mb-2">🐾 Phase 1: Foundation</h3>
+                            <ul class="text-gray-400 space-y-2 text-sm list-disc list-inside">
+                                <li>Team assembly: Assemble a team of experienced professionals in crypto, marketing, and development.</li>
+                                <li>Tokenomics: Finalize tokenomics, including total supply, presale structure, and token allocation.</li>
+                                <li>Stretch the $DPUP: Plans and strategies are finalized making sure everything's strong and ready.</li>
+                                <li>Extra Thicc Protection: Contract development with full audit to keep your $DPUP protected.</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-card bg-red-900/30 p-6 rounded-2xl border border-red-800">
+                            <h3 class="font-orbitron text-xl font-bold text-white mb-2">🐾 Phase 2: Presale and Launch</h3>
+                            <ul class="text-gray-400 space-y-2 text-sm list-disc list-inside">
+                                <li>Presale: Conduct presale with a softcap of 150 ETH and hardcap of 500 ETH.</li>
+                                <li>Token launch: Launch $DPUP token and trade on a decentralized exchange (DEX) and CEX.</li>
+                                <li>Liquidity provision: Provide liquidity to the DEX to facilitate trading.</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-card bg-red-900/30 p-6 rounded-2xl border border-red-800">
+                            <h3 class="font-orbitron text-xl font-bold text-white mb-2">🐾 Phase 3: TGE and Listings</h3>
+                            <ul class="text-gray-400 space-y-2 text-sm list-disc list-inside">
+                                <li>Conduct TGE and distribute tokens to presale participants.</li>
+                                <li>List $DPUP token on major exchanges to ensure liquidity and accessibility.</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-card bg-red-900/30 p-6 rounded-2xl border border-red-800">
+                            <h3 class="font-orbitron text-xl font-bold text-white mb-2">🐾 Phase 4: Post-Presale Development</h3>
+                            <ul class="text-gray-400 space-y-2 text-sm list-disc list-inside">
+                                <li>Continue developing and refining the DegenPup ecosystem.</li>
+                                <li>Introduce new features, such as gaming and NFT integration.</li>
+                                <li>Focus on long-term growth and sustainability through community engagement and tokenomics.</li>
+                                <li>Establish partnerships with key players in the crypto ecosystem.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Presale Details Section -->
+            <section id="presale" class="glass-section p-6 sm:p-8 rounded-3xl">
+                <div>
+                    <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-white mb-6 text-center">🦴 Presale <span class="text-yellow-400">Details</span></h2>
+                    <div class="max-w-2xl mx-auto space-y-3">
+                        <div class="flex justify-between items-center bg-red-900/30 p-3 rounded-lg"><span class="font-medium text-gray-300">Token Name</span><span class="font-bold text-white">DegenPup</span></div>
+                        <div class="flex justify-between items-center bg-red-900/30 p-3 rounded-lg"><span class="font-medium text-gray-300">Symbol</span><span class="font-bold text-yellow-400">$DEGENPUP</span></div>
+                        <div class="flex justify-between items-center bg-red-900/30 p-3 rounded-lg"><span class="font-medium text-gray-300">Total Supply</span><span class="font-bold text-white">10,000,000,000</span></div>
+                        <div class="flex justify-between items-center bg-red-900/30 p-3 rounded-lg"><span class="font-medium text-gray-300">Soft Cap</span><span class="font-bold text-white">150 ETH</span></div>
+                        <div class="flex justify-between items-center bg-red-900/30 p-3 rounded-lg"><span class="font-medium text-gray-300">Hard Cap</span><span class="font-bold text-white">500 ETH</span></div>
+                        <div class="flex justify-between items-center bg-red-900/30 p-3 rounded-lg"><span class="font-medium text-gray-300">Start Date</span><span class="font-bold text-white">01-09-2025</span></div>
+                        <div class="flex justify-between items-center bg-red-900/30 p-3 rounded-lg"><span class="font-medium text-gray-300">End Date</span><span class="font-bold text-white">14-09-2025</span></div>
+                        <div class="flex justify-between items-center bg-red-900/30 p-3 rounded-lg"><span class="font-medium text-gray-300">Min/Max Buy</span><span class="font-bold text-white">0.01 ETH / 5 ETH</span></div>
+                    </div>
+                    <!-- Presale Address moved here -->
+                    <div class="mt-8 glass-section p-4 max-w-lg mx-auto rounded-2xl">
+                        <p class="text-sm text-green-400 mb-2 font-semibold">PRESALE ADDRESS</p>
+                        <div class="flex items-center justify-between bg-black/30 rounded-full p-2">
+                            <code id="presaleAddress" class="text-green-300 font-mono text-xs sm:text-base break-all ml-4">0x1234567890abcdef1234567890abcdef12345678</code>
+                            <button onclick="copyToClipboard('presaleAddress', 'copyPresaleBtn')" id="copyPresaleBtn" class="cta-button font-bold text-sm px-4 sm:px-6 py-2 rounded-full flex-shrink-0">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tokenomics Section -->
+            <section id="tokenomics" class="glass-section p-6 sm:p-8 rounded-3xl">
+                <div class="mt-12 lg:mt-0">
+                    <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-white mb-6 text-center">Token<span class="text-red-500">omics</span></h2>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
+                        <div class="chart-container">
+                            <canvas id="tokenomicsChart"></canvas>
+                        </div>
+                        <ul class="space-y-2 text-sm text-left w-full md:w-auto">
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #FF0000;"></span>
+                                    <span class="whitespace-nowrap">Presale:</span>
+                                </div>
+                                <span class="font-bold">15.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #FFCC00;"></span>
+                                    <span class="whitespace-nowrap">Liquidity Providers:</span>
+                                </div>
+                                <span class="font-bold">1.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #00CC00;"></span>
+                                    <span class="whitespace-nowrap">Trading:</span>
+                                </div>
+                                <span class="font-bold">8.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #FF8C00;"></span>
+                                    <span class="whitespace-nowrap">Investors:</span>
+                                </div>
+                                <span class="font-bold">14.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #DD2222;"></span>
+                                    <span class="whitespace-nowrap">Community Treasury:</span>
+                                </div>
+                                <span class="font-bold">12.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #A020F0;"></span>
+                                    <span class="whitespace-nowrap">Airdrops:</span>
+                                </div>
+                                <span class="font-bold">8.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #0099FF;"></span>
+                                    <span class="whitespace-nowrap">Marketing Partnership:</span>
+                                </div>
+                                <span class="font-bold">8.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #E0B000;"></span>
+                                    <span class="whitespace-nowrap">EIP:</span>
+                                </div>
+                                <span class="font-bold">8.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #8B0000;"></span>
+                                    <span class="whitespace-nowrap">Staking Rewards:</span>
+                                </div>
+                                <span class="font-bold">8.0%</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full mr-2" style="background-color: #330066;"></span>
+                                    <span class="whitespace-nowrap">Team:</span>
+                                </div>
+                                <span class="font-bold">8.0%</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Key Phases & Exchanges -->
+            <section id="key-phases" class="glass-section p-6 sm:p-8 rounded-3xl">
+                <div class="text-center">
+                    <h2 class="font-orbitron text-3xl sm:text-4xl font-bold mb-8">🐶 Key <span class="text-red-500">Phases</span></h2>
+                    <div class="space-y-6 max-w-2xl mx-auto">
+                        <div class="bg-red-900/30 p-5 rounded-lg border border-red-800 flex items-center space-x-4">
+                            <div class="font-orbitron text-yellow-400 text-2xl">01</div><div><h3 class="font-bold text-white text-left">Presale Start</h3><p class="text-gray-400 text-sm text-left">September 1st, 2025</p></div>
+                        </div>
+                        <div class="bg-red-900/30 p-5 rounded-lg border border-red-800 flex items-center space-x-4">
+                            <div class="font-orbitron text-yellow-400 text-2xl">02</div><div><h3 class="font-bold text-white text-left">Presale End</h3><p class="text-gray-400 text-sm text-left">September 14th, 2025</p></div>
+                        </div>
+                        <div class="bg-red-900/30 p-5 rounded-lg border border-red-800 flex items-center space-x-4">
+                            <div class="font-orbitron text-yellow-400 text-2xl">03</div><div><h3 class="font-bold text-white text-left">Token Generation Event</h3><p class="text-gray-400 text-sm text-left">Immediately after presale</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-16">
+                    <h3 class="font-orbitron text-2xl font-bold mb-8">Coming to Top Exchanges</h3>
+                    <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4">
+                        <img src="https://placehold.co/120x40/475569/e2e8f0?text=OKX" alt="OKX" class="h-8 opacity-60 hover:opacity-100 transition-opacity">
+                        <img src="https://placehold.co/120x40/475569/e2e8f0?text=Gate.io" alt="Gate.io" class="h-8 opacity-60 hover:opacity-100 transition-opacity">
+                        <img src="https://placehold.co/120x40/475569/e2e8f0?text=BingX" alt="BingX" class="h-8 opacity-60 hover:opacity-100 transition-opacity">
+                        <img src="https://placehold.co/120x40/475569/e2e8f0?text=MEXC" alt="MEXC" class="h-8 opacity-60 hover:opacity-100 transition-opacity">
+                        <img src="https://placehold.co/120x40/475569/e2e8f0?text=Kraken" alt="Kraken" class="h-8 opacity-60 hover:opacity-100 transition-opacity">
+                        <img src="https://placehold.co/120x40/475569/e2e8f0?text=Bitget" alt="Bitget" class="h-8 opacity-60 hover:opacity-100 transition-opacity">
+                        <img src="https://placehold.co/120x40/475569/e2e8f0?text=HTX" alt="HTX" class="h-8 opacity-60 hover:opacity-100 transition-opacity">
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Footer Section -->
+            <footer class="text-center">
+                <div class="glass-section p-6 sm:p-8 rounded-3xl max-w-2xl mx-auto">
+                    <h3 class="font-orbitron text-2xl font-bold text-yellow-400 mb-2">🥣 Estimated Launch</h3>
+                    <p class="text-sm text-gray-400 mb-4">Contract address will be revealed post-presale.</p>
+                    <div class="bg-gray-900/50 rounded-full flex items-center justify-between p-2 max-w-md mx-auto border border-red-800">
+                        <code id="contractAddress" class="font-mono text-xs sm:text-base text-gray-500 w-full truncate ml-4">CA: To Be Announced...</code>
+                        <button onclick="copyToClipboard('contractAddress', 'copyContractBtn')" id="copyContractBtn" class="cta-button font-bold text-sm px-4 sm:px-6 py-2 rounded-full flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Copy
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h3 class="font-orbitron text-xl font-bold text-white mb-4">Post-Launch Links</h3>
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <a href="#" class="w-full sm:w-auto cta-button font-orbitron font-bold py-3 px-6 rounded-full transition-colors duration-300">BUY ON UNISWAP</a>
+                        <a href="#" class="w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">VIEW CHART</a>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-gray-500 text-sm">
+                    <p>&copy; 2025 DegenPup. All Rights Reserved.</p>
+                    <p class="mt-2">Investing in crypto assets is high risk. Please do your own research.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Animated Shape Background ---
+            const shapeContainer = document.getElementById('shape-container');
+            if (shapeContainer) {
+                const shapesToCreate = [
+                    { type: 'shape', count: 15 },
+                    { type: 'paw-shape', count: 5 },
+                    { type: 'bone-shape', count: 5 }
+                ];
+
+                shapesToCreate.forEach(shapeDef => {
+                    for (let i = 0; i < shapeDef.count; i++) {
+                        const shape = document.createElement('div');
+                        shape.className = shapeDef.type;
+                        
+                        const size = Math.random() * 80 + 20;
+                        const x = Math.random() * 100;
+                        const duration = Math.random() * 15 + 10;
+                        const delay = Math.random() * 15;
+
+                        shape.style.width = `${size}px`;
+                        shape.style.height = `${size}px`;
+                        shape.style.left = `${x}vw`;
+                        shape.style.animationDuration = `${duration}s`;
+                        shape.style.animationDelay = `${delay}s`;
+                        
+                        shapeContainer.appendChild(shape);
+                    }
+                });
+            }
+
+            // --- Countdown Timer Logic ---
+            // Set the date we're counting down to (September 1, 2025, 00:00:00 UTC)
+            const presaleDate = new Date("Sep 1, 2025 00:00:00 UTC").getTime();
+
+            const countdownFunction = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = presaleDate - now;
+
+                // Calculate time components
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result
+                document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+                document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+                document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+                document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+
+                // If the countdown is over, display a message
+                if (distance < 0) {
+                    clearInterval(countdownFunction);
+                    document.getElementById("days").innerHTML = "00";
+                    document.getElementById("hours").innerHTML = "00";
+                    document.getElementById("minutes").innerHTML = "00";
+                    document.getElementById("seconds").innerHTML = "00";
+                    const countdownContainerText = document.querySelector('#hero > div > p'); // Adjust selector if needed
+                    if (countdownContainerText) {
+                        countdownContainerText.innerHTML = "PRESALE LIVE!";
+                    }
+                    const glowingBadge = document.querySelector('.glowing-badge');
+                    if (glowingBadge) {
+                        glowingBadge.style.display = 'none'; // Hide glowing badge
+                    }
+                }
+            }, 1000);
+
+            // --- Tokenomics Pie Chart (Chart.js) ---
+            const ctx = document.getElementById('tokenomicsChart').getContext('2d');
+            const tokenomicsChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'Presale',
+                        'Liquidity Providers',
+                        'Trading',
+                        'Investors',
+                        'Community Treasury',
+                        'Airdrops',
+                        'Marketing Partnership',
+                        'EIP',
+                        'Staking Rewards',
+                        'Team'
+                    ],
+                    datasets: [{
+                        data: [15, 1, 8, 14, 12, 8, 8, 8, 8, 8], // Ensure these sum to 100 or adjust as needed
+                        backgroundColor: [
+                            '#FF0000', /* Presale - Primary Red */
+                            '#FFCC00', /* Liquidity Providers - Warm Yellow */
+                            '#00CC00', /* Trading - Green */
+                            '#FF8C00', /* Investors - Dark Orange */
+                            '#DD2222', /* Community Treasury - Deeper Red */
+                            '#A020F0', /* Airdrops - Purple */
+                            '#0099FF', /* Marketing Partnership - Bright Blue */
+                            '#E0B000', /* EIP - Darker Yellow */
+                            '#8B0000', /* Staking Rewards - Dark Red */
+                            '#330066'  /* Team - Dark Indigo */
+                        ],
+                        borderColor: '#1a1a1a', /* Dark border for segments */
+                        borderWidth: 2,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false // We are using a custom HTML legend for better styling control
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            },
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#ff0000',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
+                    }
+                }
+            });
+
+            // Adjust canvas size to be responsive
+            function resizeCanvas() {
+                const canvas = document.getElementById('tokenomicsChart');
+                const parent = canvas.parentElement;
+                const size = Math.min(parent.clientWidth, parent.clientHeight);
+                canvas.width = size;
+                canvas.height = size;
+                tokenomicsChart.resize();
+                tokenomicsChart.update();
+            }
+
+            // Initial resize
+            resizeCanvas();
+            // Listen for window resize events
+            window.addEventListener('resize', resizeCanvas);
+        });
+        
+        // --- Copy to Clipboard ---
+        function copyToClipboard(elementId, buttonId) {
+            const codeElement = document.getElementById(elementId);
+            const textToCopy = codeElement.innerText;
+            
+            // Disable copy if the text is "To Be Announced..."
+            if (textToCopy.includes('To Be Announced')) {
+                const button = document.getElementById(buttonId);
+                const originalText = button.textContent;
+                button.textContent = 'N/A';
+                setTimeout(() => { button.textContent = originalText; }, 2000);
+                return;
+            }
+            
+            const tempInput = document.createElement('input');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                const button = document.getElementById(buttonId);
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => { button.textContent = originalText; }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+            document.body.removeChild(tempInput);
+        }
+    </script>
+</body>
+</html>
