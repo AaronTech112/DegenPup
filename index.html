@@ -279,7 +279,34 @@
         }
 
         .logo-float {
-            animation: logoFloat 4s ease-in-out infinite;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        /* Scroll-triggered animations */
+        .scroll-animate {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .slide-in-from-left {
+            transform: translateX(-100px);
+        }
+
+        .slide-in-from-right {
+            transform: translateX(100px);
+        }
+
+        .zoom-in {
+            transform: scale(0.9);
+        }
+
+        .fade-in {
+             transform: translateY(50px);
         }
 
         /* Wagging animation for the logo */
@@ -471,7 +498,7 @@
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 space-y-20 sm:space-y-24 pb-20">
             <!-- About Section -->
-            <section id="about" class="glass-section p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+            <section id="about" class="glass-section p-6 sm:p-8 rounded-3xl relative overflow-hidden scroll-animate fade-in">
                 <div class="max-w-4xl text-center mx-auto relative z-10">
                     <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-center mb-6">The Inspiration Behind <span class="text-yellow-400">DegenPup</span></h2>
                     <div class="w-24 h-1 bg-red-600 mx-auto mb-8 rounded-full"></div>
@@ -493,13 +520,13 @@
             </section>
 
             <!-- Roadmap Section -->
-            <section id="roadmap" class="glass-section p-6 sm:p-8 rounded-3xl">
+            <section id="roadmap" class="glass-section p-6 sm:p-8 rounded-3xl scroll-animate slide-in-from-left">
                 <div class="max-w-6xl mx-auto">
                     <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-center mb-6">Our <span class="text-red-500">Roadmap</span></h2>
                     <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12 rounded-full"></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         <!-- Phase Cards -->
-                        <div class="roadmap-card bg-red-900/30 p-6 rounded-2xl border border-red-800">
+                        <div class="roadmap-card bg-red-900/30 p-6 rounded-2xl border border-red-800 scroll-animate zoom-in">
                             <h3 class="font-orbitron text-xl font-bold text-white mb-2">🐾 Phase 1: Foundation</h3>
                             <ul class="text-gray-400 space-y-2 text-sm list-disc list-inside">
                                 <li>Team assembly: Assemble a team of experienced professionals in crypto, marketing, and development.</li>
@@ -508,7 +535,7 @@
                                 <li>Extra Thicc Protection: Contract development with full audit to keep your $DPUP protected.</li>
                             </ul>
                         </div>
-                        <div class="roadmap-card bg-red-900/30 p-6 rounded-2xl border border-red-800">
+                        <div class="roadmap-card bg-red-900/30 p-6 rounded-2xl border border-red-800 scroll-animate">
                             <h3 class="font-orbitron text-xl font-bold text-white mb-2">🐾 Phase 2: Presale and Launch</h3>
                             <ul class="text-gray-400 space-y-2 text-sm list-disc list-inside">
                                 <li>Presale: Conduct presale with a softcap of 150 ETH and hardcap of 500 ETH.</li>
@@ -537,7 +564,7 @@
             </section>
 
             <!-- Presale Details Section -->
-            <section id="presale" class="glass-section p-6 sm:p-8 rounded-3xl">
+            <section id="presale" class="glass-section p-6 sm:p-8 rounded-3xl scroll-animate slide-in-from-right">
                 <div>
                     <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-white mb-6 text-center">🦴 Presale <span class="text-yellow-400">Details</span></h2>
                     <div class="max-w-2xl mx-auto space-y-3">
@@ -564,7 +591,7 @@
             </section>
 
             <!-- Tokenomics Section -->
-            <section id="tokenomics" class="glass-section p-6 sm:p-8 rounded-3xl">
+            <section id="tokenomics" class="glass-section p-6 sm:p-8 rounded-3xl scroll-animate zoom-in">
                 <div class="mt-12 lg:mt-0">
                     <h2 class="font-orbitron text-3xl sm:text-4xl font-bold text-white mb-6 text-center">Token<span class="text-red-500">omics</span></h2>
                     <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
@@ -648,7 +675,7 @@
             </section>
             
             <!-- Key Phases & Exchanges -->
-            <section id="key-phases" class="glass-section p-6 sm:p-8 rounded-3xl">
+            <section id="key-phases" class="glass-section p-6 sm:p-8 rounded-3xl scroll-animate fade-in">
                 <div class="text-center">
                     <h2 class="font-orbitron text-3xl sm:text-4xl font-bold mb-8">🐶 Key <span class="text-red-500">Phases</span></h2>
                     <div class="space-y-6 max-w-2xl mx-auto">
@@ -678,7 +705,7 @@
             </section>
             
             <!-- Footer Section -->
-            <footer class="text-center">
+            <footer class="text-center scroll-animate fade-in">
                 <div class="glass-section p-6 sm:p-8 rounded-3xl max-w-2xl mx-auto">
                     <h3 class="font-orbitron text-2xl font-bold text-yellow-400 mb-2">🥣 Estimated Launch</h3>
                     <p class="text-sm text-gray-400 mb-4">Contract address will be revealed post-presale.</p>
@@ -863,6 +890,43 @@
             resizeCanvas();
             // Listen for window resize events
             window.addEventListener('resize', resizeCanvas);
+
+            // --- Scroll Animation Observer ---
+            const scrollElements = document.querySelectorAll('.scroll-animate');
+
+            const elementInView = (el, dividend = 1) => {
+                const elementTop = el.getBoundingClientRect().top;
+
+                return (
+                    elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+                );
+            };
+
+            const displayScrollElement = (element) => {
+                element.classList.add('is-visible');
+            };
+
+            const hideScrollElement = (element) => {
+                element.classList.remove('is-visible');
+            };
+
+            const handleScrollAnimation = () => {
+                scrollElements.forEach((el) => {
+                    if (elementInView(el, 1.25)) {
+                        displayScrollElement(el);
+                    } else {
+                        // To make animations replay, uncomment the line below
+                        // hideScrollElement(el);
+                    }
+                })
+            }
+
+            window.addEventListener('scroll', () => {
+                handleScrollAnimation();
+            });
+
+            // Initial check
+            handleScrollAnimation();
         });
         
         // --- Copy to Clipboard ---
